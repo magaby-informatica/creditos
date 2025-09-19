@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante de Crédito</title>
+    <style>
+        /* Estilos optimizados para impresión en 58mm */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+            }
+            .receipt-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 15px; /* Tamaño de fuente base, ajústalo si es necesario */
+            color: #000;
+            background-color: #f0f0f0; /* Color de fondo para la vista previa */
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .receipt-container {
+            width: 58mm;
+            max-width: 58mm;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+        }
+
+        .header p {
+            margin: 2px 0;
+            font-size: 17px;
+        }
+
+        .section {
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #666;
+            padding-bottom: 12px;
+        }
+        
+        .section:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+        
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        
+        .item .label {
+            font-weight: bold;
+            margin-right: 5px;
+            flex-shrink: 0;
+        }
+        
+        .item .value {
+            text-align: right;
+            word-break: break-all;
+        }
+        
+        .full-width {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .full-width .value {
+            text-align: left;
+            margin-top: 2px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="receipt-container">
+        <!-- Encabezado del Recibo - Puedes cambiar "TU EMPRESA" -->
+        <div class="header">
+            <h1>TU EMPRESA</h1>
+            <p>Comprobante de Crédito</p>
+            <p>---------------</p>
+        </div>
+
+        <!-- Sección de Información General del Crédito -->
+        <div class="section">
+            <div class="item">
+                <span class="label">Credito:</span>
+                <span class="value"><<[id_credito]>></span>
+            </div>
+            <div class="item">
+                <span class="label">Ruta:</span>
+                <span class="value"><<[ruta]>></span>
+            </div>
+            <div class="item">
+                <span class="label">Inicio:</span>
+                <span class="value"><<[fecha_cre]>></span>
+            </div>
+             <div class="item">
+                <span class="label">Fin:</span>
+                <span class="value"><<[fecha_fin]>></span>
+            </div>
+        </div>
+
+        <!-- Sección de Datos del Cliente -->
+        <div class="section">
+            <p class="section-title">Cliente</p>
+            <div class="item full-width">
+                <span class="label">Nombre:</span>
+                <span class="value"><<[nombrecl]>></span>
+            </div>
+            
+        </div>
+
+        <!-- Sección de Resumen Financiero -->
+        <div class="section">
+            <p class="section-title">Resumen Financiero</p>
+            <div class="item">
+                <span class="label">Monto:</span>
+                <span class="value">$<<[monto]>></span>
+            </div>
+            <div class="item">
+                <span class="label">Saldo:</span>
+                <span class="value">$<<[saldo]>></span>
+            </div>
+            <div class="item">
+                <span class="label">C P:</span>
+                <span class="value"><<[pagadas]>></span>
+            </div>
+            <div class="item">
+                <span class="label">C x P:</span>
+                <span class="value"><<[saldo_cuotas]>></span>
+            </div>
+            <div class="item">
+                <span class="label">A T:</span>
+                <span class="value"><<[atrasosc]>></span>
+            </div>
+            <div class="item">
+                <span class="label">V S:</span>
+                <span class="value">$<<[valor_sancion]>></span>
+            </div>
+        </div>
+        
+        <!-- Pie de página -->
+        <div class="footer">
+            <p>Gracias por su preferencia.</p>            
+        </div>
+    </div>
+
+    <!-- Este script abrirá el diálogo de impresión automáticamente -->
+   // <script type="text/javascript">
+        window.onload = function() { window.print(); }
+    </script>
+
+</body>
+</html>
+
