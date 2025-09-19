@@ -125,19 +125,19 @@
         <div class="section">
             <div class="item">
                 <span class="label">Credito:</span>
-                <span class="value"><<[id_credito]>></span>
+                <span class="value" id="id_credito"></span>
             </div>
             <div class="item">
                 <span class="label">Ruta:</span>
-                <span class="value"><<[ruta]>></span>
+                <span class="value" id="ruta"></span>
             </div>
             <div class="item">
-                <span class="label">Inicio:</span>
-                <span class="value"><<[fecha_cre]>></span>
+                <span class="label">Fecha Creación:</span>
+                <span class="value" id="fecha_cre"></span>
             </div>
              <div class="item">
-                <span class="label">Fin:</span>
-                <span class="value"><<[fecha_fin]>></span>
+                <span class="label">Fecha Fin:</span>
+                <span class="value" id="fecha_fin"></span>
             </div>
         </div>
 
@@ -146,7 +146,7 @@
             <p class="section-title">Cliente</p>
             <div class="item full-width">
                 <span class="label">Nombre:</span>
-                <span class="value"><<[nombrecl]>></span>
+                <span class="value" id="nombrecl"></span>
             </div>
             
         </div>
@@ -156,27 +156,27 @@
             <p class="section-title">Resumen Financiero</p>
             <div class="item">
                 <span class="label">Monto:</span>
-                <span class="value">$<<[monto]>></span>
+                <span class="value" id="monto"></span>
             </div>
             <div class="item">
                 <span class="label">Saldo:</span>
-                <span class="value">$<<[saldo]>></span>
+                <span class="value" id="saldo"></span>
             </div>
             <div class="item">
-                <span class="label">C P:</span>
-                <span class="value"><<[pagadas]>></span>
+                <span class="label">Cuotas pagas:</span>
+                <span class="value" id="pagadas"></span>
             </div>
             <div class="item">
-                <span class="label">C x P:</span>
-                <span class="value"><<[saldo_cuotas]>></span>
+                <span class="label">Cuotas x pagar:</span>
+                <span class="value" id="saldo_cuotas"></span>
             </div>
             <div class="item">
-                <span class="label">A T:</span>
-                <span class="value"><<[atrasosc]>></span>
+                <span class="label">Atrasos:</span>
+                <span class="value" id="atrasosc"></span>
             </div>
             <div class="item">
-                <span class="label">V S:</span>
-                <span class="value">$<<[valor_sancion]>></span>
+                <span class="label">Valor Sanción:</span>
+                <span class="value" id="valor_sancion"></span>
             </div>
         </div>
         
@@ -186,9 +186,29 @@
         </div>
     </div>
 
-    <!-- Este script abrirá el diálogo de impresión automáticamente -->
-   // <script type="text/javascript">
-        window.onload = function() { window.print(); }
+    <!-- Este script lee los datos de la URL y los pone en el recibo antes de imprimir -->
+    <script type="text/javascript">
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+
+            const getParam = (paramName) => params.get(paramName) || 'N/A';
+
+            document.getElementById('id_credito').innerText = getParam('id_credito');
+            document.getElementById('ruta').innerText = getParam('ruta');
+            document.getElementById('fecha_cre').innerText = getParam('fecha_cre');
+            document.getElementById('fecha_fin').innerText = getParam('fecha_fin');
+            document.getElementById('nombrecl').innerText = getParam('nombrecl');
+            document.getElementById('monto').innerText = '$' + getParam('monto');
+            document.getElementById('saldo').innerText = '$' + getParam('saldo');
+            document.getElementById('pagadas').innerText = getParam('pagadas');
+            document.getElementById('saldo_cuotas').innerText = getParam('saldo_cuotas');
+            document.getElementById('atrasosc').innerText = getParam('atrasosc');
+            document.getElementById('valor_sancion').innerText = '$' + getParam('valor_sancion');
+
+            setTimeout(() => {
+                window.print();
+            }, 150);
+        }
     </script>
 
 </body>
