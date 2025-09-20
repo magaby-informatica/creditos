@@ -112,14 +112,12 @@
 <body>
 
     <div class="receipt-container">
-        <!-- Encabezado del Recibo - Puedes cambiar "TU EMPRESA" -->
         <div class="header">
             <h1>TU EMPRESA</h1>
             <p>Comprobante de Crédito</p>
             <p>---------------</p>
         </div>
 
-        <!-- Sección de Información General del Crédito -->
         <div class="section">
             <div class="item">
                 <span class="label">Credito:</span>
@@ -139,7 +137,6 @@
             </div>
         </div>
 
-        <!-- Sección de Datos del Cliente -->
         <div class="section">
             <p class="section-title">Cliente</p>
             <div class="item full-width">
@@ -149,7 +146,6 @@
             
         </div>
 
-        <!-- Sección de Resumen Financiero -->
         <div class="section">
             <p class="section-title">Resumen Financiero</p>
             <div class="item">
@@ -178,13 +174,11 @@
             </div>
         </div>
         
-        <!-- Pie de página -->
         <div class="footer">
-            <p>Gracias por su preferencia.</p>            
+            <p>Gracias por su preferencia.</p>             
         </div>
     </div>
 
-    <!-- Este script lee los datos de la URL y los pone en el recibo antes de imprimir -->
     <script type="text/javascript">
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
