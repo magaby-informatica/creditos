@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprobante de Crédito</title>
     <style>
-        /* Estilos optimizados para impresión en 58mm */
+        /* Estilos optimizados para impresión en 80mm */
         @media print {
             body {
                 margin: 0;
@@ -23,7 +23,8 @@
         body {
             font-family: 'Courier New', Courier, monospace;
             font-size: 15px; /* Tamaño de fuente base, ajústalo si es necesario */
-            color: #000;
+            color: #000; /* Color de texto negro */
+            font-weight: bold; /* Todo el texto en negrita */
             background-color: #f0f0f0; /* Color de fondo para la vista previa */
             margin: 0;
             padding: 20px 0;
@@ -49,7 +50,6 @@
             font-size: 20px;
             margin: 0;
             padding: 0;
-            font-weight: bold;
         }
 
         .header p {
@@ -69,7 +69,6 @@
         }
 
         .section-title {
-            font-weight: bold;
             text-transform: uppercase;
             text-align: center;
             font-size: 14px;
@@ -84,7 +83,6 @@
         }
         
         .item .label {
-            font-weight: bold;
             margin-right: 5px;
             flex-shrink: 0;
         }
@@ -213,4 +211,3 @@
 
 </body>
 </html>
-
