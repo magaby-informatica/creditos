@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprobante de Crédito</title>
+    <title>Comprobante de Ingreso</title>
     <style>
         @media print {
             body {
@@ -21,12 +21,12 @@
 
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
+            font-size: 11px;
             color: #000;
             font-weight: bold;
             background-color: #f0f0f0;
             margin: 0;
-            padding: 20px 0;
+            padding: 15px 0;
             display: flex;
             justify-content: center;
         }
@@ -34,32 +34,32 @@
         .receipt-container {
             width: 58mm;
             max-width: 58mm;
-            padding: 10px;
+            padding: 5px;
             box-sizing: border-box;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .header h1 {
-            font-size: 17px;
+            font-size: 14px;
             margin: 0;
             padding: 0;
         }
 
         .header p {
             margin: 2px 0;
-            font-size: 17px;
+            font-size: 12px;
         }
 
         .section {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border-bottom: 1px dashed #666;
-            padding-bottom: 12px;
+            padding-bottom: 8px;
         }
         
         .section:last-of-type {
@@ -70,20 +70,21 @@
         .section-title {
             text-transform: uppercase;
             text-align: center;
-            font-size: 14px;
-            margin-bottom: 8px;
+            font-size: 12px;
+            margin-bottom: 6px;
         }
         
         .item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 4px;
-            line-height: 1.4;
+            margin-bottom: 2px;
+            line-height: 1.3;
         }
         
         .item .label {
             margin-right: 5px;
             flex-shrink: 0;
+            white-space: nowrap;
         }
         
         .item .value {
@@ -103,8 +104,15 @@
 
         .footer {
             text-align: center;
-            margin-top: 12px;
-            font-size: 12px;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+        
+        .total-line {
+            font-size: 14px;
+            margin-top: 5px;
+            border-top: 1px dashed #666;
+            padding-top: 5px;
         }
     </style>
 </head>
@@ -112,75 +120,68 @@
 
     <div class="receipt-container">
         <div class="header">
-              <h1>PRESTAMOS</h1>
-            <h1>LA MAQUINA</h1>
-            <p>telefono</p>
-            <p>Datos Credito</p>
-            <p>---------------</p>
+            <h1>TU EMPRESA</h1>
+            <p>COMPROBANTE DE PAGO</p>
+            <p>-------------------------</p>
         </div>
 
         <div class="section">
+            <p class="section-title">Datos Transacción</p>
             <div class="item">
-                <span class="label">Ruta:</span>
-                <span class="value" id="ruta"></span>
-            </div>
-            <div class="item">
-                <span class="label">Credito:</span>
-                <span class="value" id="id_credito"></span>
+                <span class="label">ID Pago:</span>
+                <span class="value" id="id_pago"></span>
             </div>
             <div class="item">
-                <span class="label">F Inicio:</span>
-                <span class="value" id="fecha_cre"></span>
-            </div>
-             <div class="item">
-                <span class="label">F Fin:</span>
-                <span class="value" id="fecha_fin"></span>
+                <span class="label">Crédito ID:</span>
+                <span class="value" id="credito_asociado"></span>
             </div>
             <div class="item">
-                <span class="label">Monto:</span>
-                <span class="value" id="monto"></span>
+                <span class="label">Fecha:</span>
+                <span class="value" id="fecha_pago"></span>
             </div>
-            <div class="item">
-                <span class="label">Días:</span>
-                <span class="value" id="dias"></span>
-            </div>
-        </div>
-
-        <div class="section">
-            <p class="section-title">Cliente</p>
             <div class="item full-width">
-                <span class="label">Nombre:</span>
+                <span class="label">Cliente:</span>
                 <span class="value" id="nombrecl"></span>
             </div>
         </div>
 
         <div class="section">
-            <p class="section-title">Resumen Financiero</p>
+            <p class="section-title">Detalle del Pago</p>
             
             <div class="item">
-                <span class="label">Saldo:</span>
-                <span class="value" id="saldo"></span>
+                <span class="label">Saldo Ant.:</span>
+                <span class="value" id="saldo_anterior"></span>
             </div>
             <div class="item">
-                <span class="label">Cuotas pagas:</span>
-                <span class="value" id="pagadas"></span>
+                <span class="label">Cuota Base:</span>
+                <span class="value" id="cuota_base"></span>
             </div>
             <div class="item">
-                <span class="label">Cuotas x pagar:</span>
-                <span class="value" id="saldo_cuotas"></span>
+                <span class="label">Sanción/Mora:</span>
+                <span class="value" id="sancion_pagada"></span>
             </div>
             <div class="item">
-                <span class="label">Atrasos:</span>
-                <span class="value" id="atrasosc"></span>
+                <span class="label">Días Atraso:</span>
+                <span class="value" id="dias_atraso"></span>
             </div>
+            
+            <div class="item total-line">
+                <span class="label">MONTO PAGADO:</span>
+                <span class="value" id="monto_ingreso"></span>
+            </div>
+        </div>
+
+        <div class="section">
+            <p class="section-title">Resumen Final</p>
             <div class="item">
-                <span class="label">V Sanción:</span>
-                <span class="value" id="valor_sancion"></span>
+                <span class="label">Nuevo Saldo:</span>
+                <span class="value" id="nuevo_saldo"></span>
             </div>
         </div>
         
         <div class="footer">
-            <p>Gracias por su preferencia.</p>              
+            <p>Comprobante no fiscal.</p>
+            <p>¡Gracias por su pago!</p>              
         </div>
     </div>
 
@@ -188,7 +189,7 @@
         const formatCurrency = (value, locale = 'es-CO', currency = 'COP') => {
             const num = parseFloat(value);
             if (isNaN(num)) {
-                return 'N/A';
+                return '$0';
             }
             try {
                 return new Intl.NumberFormat(locale, {
@@ -207,7 +208,12 @@
 
             const getParam = (paramName) => {
                 const value = params.get(paramName);
-                return value !== null && value.trim() !== '' ? value.trim() : 'N/A';
+                // Si el valor es nulo o vacío, devuelve "N/A" o "0" para números.
+                if (value === null || value.trim() === '') {
+                    // Trata las cantidades como 0 si están vacías, para el formato de moneda.
+                    return ['saldo_anterior', 'monto_ingreso', 'cuota_base', 'sancion_pagada', 'nuevo_saldo'].includes(paramName) ? '0' : 'N/A';
+                }
+                return value.trim();
             };
             
             const setText = (id, text) => {
@@ -217,24 +223,23 @@
                 }
             };
 
-            // Parámetros sin formato de moneda
-            setText('id_credito', getParam('id_credito'));
-            setText('ruta', getParam('ruta'));
-            setText('fecha_cre', getParam('fecha_cre'));
-            setText('fecha_fin', getParam('fecha_fin'));
-            setText('dias', getParam('dias'));
-            setText('nombrecl', getParam('nombrecl'));
-            setText('pagadas', getParam('pagadas'));
-            setText('saldo_cuotas', getParam('saldo_cuotas'));
-            setText('atrasosc', getParam('atrasosc'));
-
-            // Parámetros con formato de moneda (ajusta locale y currencyCode si es necesario)
+            // Configuración de Moneda
             const locale = 'es-CO';
             const currencyCode = 'COP';
 
-            setText('monto', formatCurrency(getParam('monto'), locale, currencyCode));
-            setText('saldo', formatCurrency(getParam('saldo'), locale, currencyCode));
-            setText('valor_sancion', formatCurrency(getParam('valor_sancion'), locale, currencyCode));
+            // Parámetros sin formato de moneda
+            setText('id_pago', getParam('id_ingreso'));
+            setText('credito_asociado', getParam('id_credito'));
+            setText('fecha_pago', getParam('fecha'));
+            setText('nombrecl', getParam('nombrecl'));
+            setText('dias_atraso', getParam('dias_atraso'));
+
+            // Parámetros con formato de moneda
+            setText('monto_ingreso', formatCurrency(getParam('monto_ingreso'), locale, currencyCode));
+            setText('saldo_anterior', formatCurrency(getParam('saldo_ant'), locale, currencyCode));
+            setText('cuota_base', formatCurrency(getParam('cuota_esperada'), locale, currencyCode));
+            setText('sancion_pagada', formatCurrency(getParam('sancion'), locale, currencyCode));
+            setText('nuevo_saldo', formatCurrency(getParam('nuevo_saldo'), locale, currencyCode));
 
             setTimeout(() => {
                 window.print();
