@@ -116,12 +116,13 @@
             <h1>LA MAQUINA</h1>
             <p>telefono</p>
             <p>Datos Credito</p>
-            <p>---------------</p>
+            <p>------------</p>
         </div>
 
         <div class="section">
-                        <div class="item">
-                <span class="label">Ruta:</span>
+            <div class="item">
+                <span class="label">Ruta:
+                </span>
                 <span class="value" id="ruta"></span>
             </div>
             <div class="item">
@@ -144,7 +145,6 @@
                 <span class="label">Días:</span>
                 <span class="value" id="dias"></span>
             </div>
-            
         </div>
 
         <div class="section">
@@ -153,7 +153,6 @@
                 <span class="label">Nombre:</span>
                 <span class="value" id="nombrecl"></span>
             </div>
-            
         </div>
 
         <div class="section">
@@ -219,28 +218,24 @@
                 }
             };
 
+            // Parámetros sin formato de moneda
             setText('id_credito', getParam('id_credito'));
             setText('ruta', getParam('ruta'));
             setText('fecha_cre', getParam('fecha_cre'));
             setText('fecha_fin', getParam('fecha_fin'));
             setText('dias', getParam('dias'));
             setText('nombrecl', getParam('nombrecl'));
-
-            const locale = 'es-CO';
-            const currencyCode = 'COP';
-
-            const monto = getParam('monto');
-            setText('monto', formatCurrency(monto, locale, currencyCode));
-            
-            const saldo = getParam('saldo');
-            setText('saldo', formatCurrency(saldo, locale, currencyCode));
-
-            const valorSancion = getParam('valor_sancion');
-            setText('valor_sancion', formatCurrency(valorSancion, locale, currencyCode));
-
             setText('pagadas', getParam('pagadas'));
             setText('saldo_cuotas', getParam('saldo_cuotas'));
             setText('atrasosc', getParam('atrasosc'));
+
+            // Parámetros con formato de moneda (ajusta locale y currencyCode si es necesario)
+            const locale = 'es-CO';
+            const currencyCode = 'COP';
+
+            setText('monto', formatCurrency(getParam('monto'), locale, currencyCode));
+            setText('saldo', formatCurrency(getParam('saldo'), locale, currencyCode));
+            setText('valor_sancion', formatCurrency(getParam('valor_sancion'), locale, currencyCode));
 
             setTimeout(() => {
                 window.print();
