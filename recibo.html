@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprobante de Crédito</title>
     <style>
-        /* Estilos optimizados para impresión en 80mm */
         @media print {
             body {
                 margin: 0;
@@ -22,12 +21,10 @@
 
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 15px; /* Tamaño de fuente base, ajústalo si es necesario */
-            color: #000; /* Color de texto negro */
-            /* --- CAMBIO AQUÍ: Usamos 900 para el máximo grosor --- */
-            font-weight: 900; 
-            /* --------------------------------------------------- */
-            background-color: #f0f0f0; /* Color de fondo para la vista previa */
+            font-size: 12px;
+            color: #000;
+            font-weight: bold;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 20px 0;
             display: flex;
@@ -35,8 +32,8 @@
         }
 
         .receipt-container {
-            width: 80mm;
-            max-width: 80mm;
+            width: 58mm;
+            max-width: 58mm;
             padding: 10px;
             box-sizing: border-box;
             background-color: #fff;
@@ -49,7 +46,7 @@
         }
 
         .header h1 {
-            font-size: 20px;
+            font-size: 17px;
             margin: 0;
             padding: 0;
         }
@@ -106,8 +103,8 @@
 
         .footer {
             text-align: center;
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 12px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -115,19 +112,21 @@
 
     <div class="receipt-container">
         <div class="header">
-            <h1>TU EMPRESA</h1>
-            <p>Comprobante de Crédito</p>
+              <h1>PRESTAMOS</h1>
+            <h1>LA MAQUINA</h1>
+            <p>telefono</p>
+            <p>Datos Credito</p>
             <p>---------------</p>
         </div>
 
         <div class="section">
+                        <div class="item">
+                <span class="label">Ruta:</span>
+                <span class="value" id="ruta"></span>
+            </div>
             <div class="item">
                 <span class="label">Credito:</span>
                 <span class="value" id="id_credito"></span>
-            </div>
-            <div class="item">
-                <span class="label">Ruta:</span>
-                <span class="value" id="ruta"></span>
             </div>
             <div class="item">
                 <span class="label">F Inicio:</span>
@@ -137,6 +136,15 @@
                 <span class="label">F Fin:</span>
                 <span class="value" id="fecha_fin"></span>
             </div>
+            <div class="item">
+                <span class="label">Monto:</span>
+                <span class="value" id="monto"></span>
+            </div>
+            <div class="item">
+                <span class="label">Días:</span>
+                <span class="value" id="dias"></span>
+            </div>
+            
         </div>
 
         <div class="section">
@@ -150,10 +158,7 @@
 
         <div class="section">
             <p class="section-title">Resumen Financiero</p>
-            <div class="item">
-                <span class="label">Monto:</span>
-                <span class="value" id="monto"></span>
-            </div>
+            
             <div class="item">
                 <span class="label">Saldo:</span>
                 <span class="value" id="saldo"></span>
@@ -177,32 +182,70 @@
         </div>
         
         <div class="footer">
-            <p>Gracias por su preferencia.</p>             
+            <p>Gracias por su preferencia.</p>              
         </div>
     </div>
 
     <script type="text/javascript">
+        const formatCurrency = (value, locale = 'es-CO', currency = 'COP') => {
+            const num = parseFloat(value);
+            if (isNaN(num)) {
+                return 'N/A';
+            }
+            try {
+                return new Intl.NumberFormat(locale, {
+                    style: 'currency',
+                    currency: currency,
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                }).format(num);
+            } catch (e) {
+                return `$${num.toLocaleString('es-ES')}`; 
+            }
+        };
+
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
 
-            const getParam = (paramName) => params.get(paramName) || 'N/A';
+            const getParam = (paramName) => {
+                const value = params.get(paramName);
+                return value !== null && value.trim() !== '' ? value.trim() : 'N/A';
+            };
+            
+            const setText = (id, text) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.innerText = text;
+                }
+            };
 
-            document.getElementById('id_credito').innerText = getParam('id_credito');
-            document.getElementById('ruta').innerText = getParam('ruta');
-            document.getElementById('fecha_cre').innerText = getParam('fecha_cre');
-            document.getElementById('fecha_fin').innerText = getParam('fecha_fin');
-            document.getElementById('nombrecl').innerText = getParam('nombrecl');
-            document.getElementById('monto').innerText = '$' + getParam('monto');
-            document.getElementById('saldo').innerText = '$' + getParam('saldo');
-            document.getElementById('pagadas').innerText = getParam('pagadas');
-            document.getElementById('saldo_cuotas').innerText = getParam('saldo_cuotas');
-            document.getElementById('atrasosc').innerText = getParam('atrasosc');
-            document.getElementById('valor_sancion').innerText = '$' + getParam('valor_sancion');
+            setText('id_credito', getParam('id_credito'));
+            setText('ruta', getParam('ruta'));
+            setText('fecha_cre', getParam('fecha_cre'));
+            setText('fecha_fin', getParam('fecha_fin'));
+            setText('dias', getParam('dias'));
+            setText('nombrecl', getParam('nombrecl'));
+
+            const locale = 'es-CO';
+            const currencyCode = 'COP';
+
+            const monto = getParam('monto');
+            setText('monto', formatCurrency(monto, locale, currencyCode));
+            
+            const saldo = getParam('saldo');
+            setText('saldo', formatCurrency(saldo, locale, currencyCode));
+
+            const valorSancion = getParam('valor_sancion');
+            setText('valor_sancion', formatCurrency(valorSancion, locale, currencyCode));
+
+            setText('pagadas', getParam('pagadas'));
+            setText('saldo_cuotas', getParam('saldo_cuotas'));
+            setText('atrasosc', getParam('atrasosc'));
 
             setTimeout(() => {
                 window.print();
-            }, 150);
-        }
+            }, 300);
+        };
     </script>
 
 </body>
