@@ -6,134 +6,132 @@
 <title>CUADRE - Dashboard</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box}
 body{
-font-family:Inter,system-ui,sans-serif;
-background:linear-gradient(135deg,#1e3c72,#2a5298,#7e22ce);
-min-height:100vh;padding:20px}
-.container{max-width:1600px;margin:auto}
-.header,.info-card,.metric-card,.card{
-background:#fff;border-radius:18px;
-box-shadow:0 12px 35px rgba(0,0,0,.25)}
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:linear-gradient(135deg,#1e3c72,#7e22ce);
+  padding:20px;
+}
+.container{max-width:1400px;margin:auto}
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
 .header{
-padding:25px 35px;margin-bottom:25px;
-display:flex;justify-content:space-between;align-items:center}
-.header-left{display:flex;align-items:center;gap:18px}
-.logo-container{
-width:55px;height:55px;border-radius:14px;
-background:linear-gradient(135deg,#667eea,#764ba2);
-display:flex;align-items:center;justify-content:center}
-.header-info h1{
-font-size:28px;font-weight:800;
-background:linear-gradient(135deg,#667eea,#764ba2);
--webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header-info p{font-size:13px;color:#666}
-.date-badge{
-background:linear-gradient(135deg,#667eea,#764ba2);
-color:#fff;padding:10px 22px;border-radius:25px;
-font-weight:700;font-size:14px}
-.info-card{padding:28px;margin-bottom:25px}
-.info-card-title{font-size:20px;font-weight:700}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px}
-.info-item{
-background:#f8f9ff;padding:14px;border-radius:11px;
-display:flex;justify-content:space-between}
-.info-value{font-weight:700}
-.metrics-grid{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:22px;margin-bottom:25px}
-.metric-card{padding:26px;position:relative}
-.metric-card::before{
-content:"";position:absolute;top:0;left:0;height:3px;width:100%;
-background:linear-gradient(90deg,#667eea,#764ba2)}
-.metric-label{font-size:13px;color:#666;font-weight:600}
-.metric-value{font-size:32px;font-weight:800;margin-top:6px}
-.metric-change{
-display:inline-block;margin-top:8px;
-padding:4px 11px;border-radius:18px;
-font-size:11px;font-weight:700;color:#fff;background:#10b981}
-.card{padding:28px}
-.card-title{font-size:20px;font-weight:700}
-.table-container{overflow-x:auto;margin-top:18px}
-table{width:100%;border-collapse:collapse}
-thead{background:linear-gradient(135deg,#667eea,#764ba2)}
-th,td{padding:14px;font-size:13px}
-th{color:#fff;text-transform:uppercase}
-tbody tr:hover{background:#f8f9ff}
-.amount-cell{font-weight:800;color:#10b981}
-.total-section{
-margin-top:18px;padding:22px;border-radius:11px;
-background:linear-gradient(135deg,#f8f9ff,#eef2ff);
-display:flex;justify-content:space-between}
-.total-amount{font-size:28px;font-weight:900;color:#10b981}
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.title{
+  font-size:22px;
+  font-weight:800;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+.box{
+  background:#f4f6ff;
+  border-radius:10px;
+  padding:12px 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.label{font-size:13px;color:#555}
+.value{font-weight:800;font-size:14px}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+thead{
+  background:linear-gradient(135deg,#667eea,#764ba2);
+}
+th{
+  color:#fff;
+  font-size:12px;
+  padding:10px;
+  text-align:left;
+  text-transform:uppercase;
+}
+td{
+  padding:10px;
+  font-size:13px;
+  border-bottom:1px solid #eee;
+}
+tbody tr:hover{background:#f6f8ff}
+.amount{font-weight:700;color:#10b981}
+
+@media(max-width:768px){
+  .header{flex-direction:column;gap:10px}
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<div class="header">
-  <div class="header-left">
-    <div class="logo-container">✔</div>
-    <div class="header-info">
-      <h1>CUADRE</h1>
-      <p>Sistema de Gestión de Ingresos</p>
-    </div>
-  </div>
-  <div class="date-badge" id="Fecha"></div>
+<!-- HEADER -->
+<div class="card header">
+  <div class="title">CUADRE</div>
+  <div id="Fecha"></div>
 </div>
 
-<div class="info-card">
-  <h2 class="info-card-title">Información General</h2><br>
-  <div class="info-grid">
-    <div class="info-item"><span>Usuario</span><span id="Usuario" class="info-value"></span></div>
-    <div class="info-item"><span>Ruta</span><span id="Ruta" class="info-value"></span></div>
-    <div class="info-item"><span>ID Inicio</span><span id="IdInicio" class="info-value"></span></div>
-  </div>
-</div>
-
-<div class="metrics-grid">
-  <div class="metric-card">
-    <div class="metric-label">Valor a Cobrar</div>
-    <div class="metric-value" id="ValorACobrar"></div>
-    <span class="metric-change">Estado</span>
-  </div>
-  <div class="metric-card">
-    <div class="metric-label">Valor Cobrado</div>
-    <div class="metric-value" id="ValorCobrado"></div>
-    <span class="metric-change" style="background:#ef4444">Estado</span>
-  </div>
-  <div class="metric-card">
-    <div class="metric-label">Total Pagos</div>
-    <div class="metric-value" id="Pagos"></div>
-    <span class="metric-change" style="background:#f59e0b">Registros</span>
-  </div>
-  <div class="metric-card">
-    <div class="metric-label">Atrasos (AI)</div>
-    <div class="metric-value" id="At"></div>
-    <span class="metric-change" style="background:#8b5cf6">Estado</span>
-  </div>
-</div>
-
+<!-- INFORMACIÓN GENERAL -->
 <div class="card">
-  <h2 class="card-title">Ingresos Relacionados</h2>
-  <p style="margin-top:12px;color:#666">
-    Los ingresos detallados se cargan desde backend (API / Apps Script).
-  </p>
-  <div class="total-section">
-    <div>
-      <div style="font-weight:700;color:#667eea">TOTAL SALDO</div>
-      <small>Suma de transacciones</small>
-    </div>
-    <div class="total-amount" id="TotalSaldo">—</div>
+  <h3>Información General</h3><br>
+  <div class="grid">
+    <div class="box"><span class="label">Usuario</span><span id="Usuario" class="value"></span></div>
+    <div class="box"><span class="label">Ruta</span><span id="Ruta" class="value"></span></div>
+    <div class="box"><span class="label">ID Inicio</span><span id="IdInicio" class="value"></span></div>
   </div>
+</div>
+
+<!-- RESUMEN -->
+<div class="card">
+  <h3>Resumen</h3><br>
+  <div class="grid">
+    <div class="box"><span class="label">Valor a Cobrar</span><span id="ValorACobrar" class="value"></span></div>
+    <div class="box"><span class="label">Valor Cobrado</span><span id="ValorCobrado" class="value"></span></div>
+    <div class="box"><span class="label">Pagos</span><span id="Pagos" class="value"></span></div>
+    <div class="box"><span class="label">Atrasos</span><span id="At" class="value"></span></div>
+  </div>
+</div>
+
+<!-- INGRESOS RELACIONADOS -->
+<div class="card">
+  <h3>Ingresos Relacionados</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Crédito</th>
+        <th>Ingreso</th>
+        <th>Atraso</th>
+        <th>Sanción</th>
+        <th>Saldo</th>
+      </tr>
+    </thead>
+    <tbody id="rows">
+      <tr><td colspan="6">Cargando…</td></tr>
+    </tbody>
+  </table>
 </div>
 
 </div>
 
 <script>
+// ---------- DATOS FIJOS (URL) ----------
 const p = new URLSearchParams(location.search);
-const set = (id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v||'';}
+const set = (id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v||''};
 
 set('Usuario',p.get('Usuario'));
 set('Ruta',p.get('Ruta'));
@@ -143,6 +141,41 @@ set('ValorCobrado',p.get('ValorCobrado'));
 set('Pagos',p.get('Pagos'));
 set('At',p.get('At'));
 set('Fecha',p.get('Fecha'));
+
+// ---------- INGRESOS RELACIONADOS ----------
+async function cargarIngresos(){
+  const idInicio = p.get("IdInicio");
+  if(!idInicio) return;
+
+  const res = await fetch(
+    "https://TU_DOMINIO/ingresos.php?IdInicio=" +
+    encodeURIComponent(idInicio)
+  );
+
+  const data = await res.json();
+  const tbody = document.getElementById("rows");
+  tbody.innerHTML = "";
+
+  if(data.length === 0){
+    tbody.innerHTML = "<tr><td colspan='6'>Sin registros</td></tr>";
+    return;
+  }
+
+  data.forEach(r=>{
+    tbody.innerHTML += `
+      <tr>
+        <td>${r.fecha}</td>
+        <td>${r.credito}</td>
+        <td>${r.ingreso ?? '-'}</td>
+        <td>${r.atraso}</td>
+        <td>${r.sancion ?? '-'}</td>
+        <td class="amount">${r.saldoi}</td>
+      </tr>
+    `;
+  });
+}
+
+cargarIngresos();
 </script>
 
 </body>
