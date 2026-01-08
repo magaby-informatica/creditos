@@ -6,72 +6,74 @@
 <title>CUADRE - Dashboard</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:linear-gradient(135deg,#1e3c72,#7e22ce);
-  padding:20px;
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg,#1e3c72,#2a5298,#7e22ce);
+    margin: 0;
+    padding: 24px;
 }
-.container{max-width:1400px;margin:auto}
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+.container {
+    max-width: 1400px;
+    margin: auto;
 }
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 14px 40px rgba(0,0,0,.25);
+    margin-bottom: 24px;
 }
-.title{
-  font-size:22px;
-  font-weight:800;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
 }
-.box{
-  background:#f4f6ff;
-  border-radius:10px;
-  padding:12px 14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.subtitle {
+    font-size: 13px;
+    color: #666;
 }
-.label{font-size:13px;color:#555}
-.value{font-weight:800;font-size:14px}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:15px;
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 16px;
 }
-thead{
-  background:linear-gradient(135deg,#667eea,#764ba2);
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 18px;
 }
-th{
-  color:#fff;
-  font-size:12px;
-  padding:10px;
-  text-align:left;
-  text-transform:uppercase;
+.label {
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
 }
-td{
-  padding:10px;
-  font-size:13px;
-  border-bottom:1px solid #eee;
+.value {
+    font-size: 20px;
+    font-weight: 800;
 }
-tbody tr:hover{background:#f6f8ff}
-.amount{font-weight:700;color:#10b981}
-
-@media(max-width:768px){
-  .header{flex-direction:column;gap:10px}
+.metric {
+    border-radius: 16px;
+    padding: 20px;
+    background: #f8f9ff;
 }
+.badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+}
+.green {background:#10b981}
+.red {background:#ef4444}
+.orange {background:#f59e0b}
+.purple {background:#8b5cf6}
 </style>
 </head>
 
@@ -80,102 +82,71 @@ tbody tr:hover{background:#f6f8ff}
 
 <!-- HEADER -->
 <div class="card header">
-  <div class="title">CUADRE</div>
-  <div id="Fecha"></div>
+    <div>
+        <h1>CUADRE</h1>
+        <div class="subtitle">Sistema de Gestión de Ingresos</div>
+    </div>
 </div>
 
 <!-- INFORMACIÓN GENERAL -->
 <div class="card">
-  <h3>Información General</h3><br>
-  <div class="grid">
-    <div class="box"><span class="label">Usuario</span><span id="Usuario" class="value"></span></div>
-    <div class="box"><span class="label">Ruta</span><span id="Ruta" class="value"></span></div>
-    <div class="box"><span class="label">ID Inicio</span><span id="IdInicio" class="value"></span></div>
-  </div>
+    <h3>Información General</h3>
+    <div class="grid-3">
+        <div class="metric">
+            <div class="label">Usuario</div>
+            <div class="value" id="usuario"></div>
+        </div>
+        <div class="metric">
+            <div class="label">Ruta</div>
+            <div class="value" id="ruta"></div>
+        </div>
+        <div class="metric">
+            <div class="label">ID Inicio</div>
+            <div class="value" id="idinicio"></div>
+        </div>
+    </div>
 </div>
 
 <!-- RESUMEN -->
 <div class="card">
-  <h3>Resumen</h3><br>
-  <div class="grid">
-    <div class="box"><span class="label">Valor a Cobrar</span><span id="ValorACobrar" class="value"></span></div>
-    <div class="box"><span class="label">Valor Cobrado</span><span id="ValorCobrado" class="value"></span></div>
-    <div class="box"><span class="label">Pagos</span><span id="Pagos" class="value"></span></div>
-    <div class="box"><span class="label">Atrasos</span><span id="At" class="value"></span></div>
-  </div>
-</div>
-
-<!-- INGRESOS RELACIONADOS -->
-<div class="card">
-  <h3>Ingresos Relacionados</h3>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Crédito</th>
-        <th>Ingreso</th>
-        <th>Atraso</th>
-        <th>Sanción</th>
-        <th>Saldo</th>
-      </tr>
-    </thead>
-    <tbody id="rows">
-      <tr><td colspan="6">Cargando…</td></tr>
-    </tbody>
-  </table>
+    <h3>Resumen</h3>
+    <div class="grid-4">
+        <div class="metric">
+            <div class="label">Valor a Cobrar</div>
+            <div class="value" id="valoracobrar"></div>
+            <span class="badge green">Estado</span>
+        </div>
+        <div class="metric">
+            <div class="label">Valor Cobrado</div>
+            <div class="value" id="valorcobrado"></div>
+            <span class="badge red">Estado</span>
+        </div>
+        <div class="metric">
+            <div class="label">Total Pagos</div>
+            <div class="value" id="pagos"></div>
+            <span class="badge orange">Registros</span>
+        </div>
+        <div class="metric">
+            <div class="label">Atrasos</div>
+            <div class="value" id="atrasos"></div>
+            <span class="badge purple">Estado</span>
+        </div>
+    </div>
 </div>
 
 </div>
 
 <script>
-// ---------- DATOS FIJOS (URL) ----------
-const p = new URLSearchParams(location.search);
-const set = (id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v||''};
+const p = new URLSearchParams(window.location.search);
+const get = k => p.get(k) ?? '';
 
-set('Usuario',p.get('Usuario'));
-set('Ruta',p.get('Ruta'));
-set('IdInicio',p.get('IdInicio'));
-set('ValorACobrar',p.get('ValorACobrar'));
-set('ValorCobrado',p.get('ValorCobrado'));
-set('Pagos',p.get('Pagos'));
-set('At',p.get('At'));
-set('Fecha',p.get('Fecha'));
-
-// ---------- INGRESOS RELACIONADOS ----------
-async function cargarIngresos(){
-  const idInicio = p.get("IdInicio");
-  if(!idInicio) return;
-
-  const res = await fetch(
-    "https://TU_DOMINIO/ingresos.php?IdInicio=" +
-    encodeURIComponent(idInicio)
-  );
-
-  const data = await res.json();
-  const tbody = document.getElementById("rows");
-  tbody.innerHTML = "";
-
-  if(data.length === 0){
-    tbody.innerHTML = "<tr><td colspan='6'>Sin registros</td></tr>";
-    return;
-  }
-
-  data.forEach(r=>{
-    tbody.innerHTML += `
-      <tr>
-        <td>${r.fecha}</td>
-        <td>${r.credito}</td>
-        <td>${r.ingreso ?? '-'}</td>
-        <td>${r.atraso}</td>
-        <td>${r.sancion ?? '-'}</td>
-        <td class="amount">${r.saldoi}</td>
-      </tr>
-    `;
-  });
-}
-
-cargarIngresos();
+document.getElementById('usuario').innerText = get('Usuario');
+document.getElementById('ruta').innerText = get('Ruta');
+document.getElementById('idinicio').innerText = get('IdInicio');
+document.getElementById('valoracobrar').innerText = get('ValorACobrar');
+document.getElementById('valorcobrado').innerText = get('ValorCobrado');
+document.getElementById('pagos').innerText = get('Pagos');
+document.getElementById('atrasos').innerText = get('At');
 </script>
 
 </body>
