@@ -22,19 +22,13 @@ body {
     background: #ffffff;
     border-radius: 20px;
     padding: 26px;
-    box-shadow: 0 18px 45px rgba(0,0,0,.28);
+    box-shadow: 0 18px 45px rgba(0,0,0,.25);
     margin-bottom: 26px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 800;
 }
 
@@ -43,16 +37,22 @@ body {
     color: #666;
 }
 
-.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px;
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
 }
 
 .grid-4 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
+    gap: 18px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
 }
 
 .metric {
@@ -64,7 +64,7 @@ body {
 .label {
     font-size: 13px;
     font-weight: 600;
-    color: #666;
+    color: #555;
 }
 
 .value {
@@ -85,6 +85,7 @@ body {
 }
 
 .green { background: #10b981; }
+.blue { background: #2563eb; }
 .red { background: #ef4444; }
 .orange { background: #f59e0b; }
 .purple { background: #8b5cf6; }
@@ -96,16 +97,22 @@ body {
 
 <!-- ENCABEZADO -->
 <div class="card header">
-    <div>
-        <h1>CUADRE</h1>
-        <div class="subtitle">Sistema de Gestión de Ingresos</div>
-    </div>
+    <h1>CUADRE</h1>
+    <div class="subtitle">Sistema de Gestión de Ingresos</div>
 </div>
 
 <!-- INFORMACIÓN GENERAL -->
 <div class="card">
-    <h3>Información General</h3>
-    <div class="grid-3">
+    <div class="section-title">Información General</div>
+    <div class="grid-4">
+        <div class="metric">
+            <div class="label">Fecha</div>
+            <div class="value" id="fecha">—</div>
+        </div>
+        <div class="metric">
+            <div class="label">ID Inicio</div>
+            <div class="value" id="idinicio">—</div>
+        </div>
         <div class="metric">
             <div class="label">Usuario</div>
             <div class="value" id="usuario">—</div>
@@ -114,59 +121,68 @@ body {
             <div class="label">Ruta</div>
             <div class="value" id="ruta">—</div>
         </div>
-        <div class="metric">
-            <div class="label">ID Inicio</div>
-            <div class="value" id="idinicio">—</div>
-        </div>
     </div>
 </div>
 
-<!-- RESUMEN -->
+<!-- RESUMEN FINANCIERO -->
 <div class="card">
-    <h3>Resumen</h3>
-    <div class="grid-4">
+    <div class="section-title">Resumen Financiero</div>
+    <div class="grid-3">
+        <div class="metric">
+            <div class="label">Valor Ruta</div>
+            <div class="value" id="valorruta">$0</div>
+            <span class="badge blue">Ruta</span>
+        </div>
         <div class="metric">
             <div class="label">Valor a Cobrar</div>
             <div class="value" id="valoracobrar">$0</div>
-            <span class="badge green">Estado</span>
+            <span class="badge green">Esperado</span>
         </div>
-
         <div class="metric">
             <div class="label">Valor Cobrado</div>
             <div class="value" id="valorcobrado">$0</div>
-            <span class="badge red">Estado</span>
+            <span class="badge red">Recaudo</span>
         </div>
+    </div>
+</div>
 
+<!-- INDICADORES -->
+<div class="card">
+    <div class="section-title">Indicadores</div>
+    <div class="grid-3">
         <div class="metric">
-            <div class="label">Total Pagos</div>
-            <div class="value" id="pagos">0</div>
-            <span class="badge orange">Registros</span>
+            <div class="label">Clientes Activos</div>
+            <div class="value" id="clientes">0</div>
+            <span class="badge blue">Clientes</span>
         </div>
-
+        <div class="metric">
+            <div class="label">Pagos</div>
+            <div class="value" id="pagos">0</div>
+            <span class="badge orange">Movimientos</span>
+        </div>
         <div class="metric">
             <div class="label">Atrasos</div>
             <div class="value" id="atrasos">0</div>
-            <span class="badge purple">Estado</span>
+            <span class="badge purple">Pendientes</span>
         </div>
     </div>
 </div>
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 const params = new URLSearchParams(window.location.search);
-const get = key => params.get(key) ?? '';
+const get = k => params.get(k) ?? '';
 
-const formatNumber = value => {
-    const n = Number(value);
-    return isNaN(n) ? value : n.toLocaleString('es-CO');
+const formatNumber = v => {
+    const n = Number(v);
+    return isNaN(n) ? v : n.toLocaleString('es-CO');
 };
 
-const formatMoney = value => {
-    const n = Number(value);
+const formatMoney = v => {
+    const n = Number(v);
     return isNaN(n)
-        ? value
+        ? v
         : n.toLocaleString('es-CO', {
             style: 'currency',
             currency: 'COP',
@@ -174,5 +190,19 @@ const formatMoney = value => {
         });
 };
 
-// Información general
-document.getElementById('usuario').innerText = formatNumber(get('Usuario'));
+document.getElementById('fecha').innerText = get('Fecha');
+document.getElementById('idinicio').innerText = get('IdInicio');
+document.getElementById('usuario').innerText = get('Usuario');
+document.getElementById('ruta').innerText = get('Ruta');
+
+document.getElementById('valorruta').innerText = formatMoney(get('ValorRuta'));
+document.getElementById('valoracobrar').innerText = formatMoney(get('ValorACobrar'));
+document.getElementById('valorcobrado').innerText = formatMoney(get('ValorCobrado'));
+
+document.getElementById('clientes').innerText = formatNumber(get('ClientesActivos'));
+document.getElementById('pagos').innerText = formatNumber(get('Pagos'));
+document.getElementById('atrasos').innerText = formatNumber(get('At'));
+</script>
+
+</body>
+</html>
