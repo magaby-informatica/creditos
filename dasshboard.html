@@ -7,80 +7,94 @@
 
 <style>
 body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: linear-gradient(135deg,#1e3c72,#2a5298,#7e22ce);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #7e22ce);
     margin: 0;
     padding: 24px;
 }
+
 .container {
     max-width: 1400px;
     margin: auto;
 }
+
 .card {
-    background: #fff;
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0 14px 40px rgba(0,0,0,.25);
-    margin-bottom: 24px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.28);
+    margin-bottom: 26px;
 }
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .header h1 {
     margin: 0;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 800;
 }
+
 .subtitle {
     font-size: 13px;
     color: #666;
 }
+
 .grid-3 {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-    gap: 16px;
-}
-.grid-4 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 18px;
 }
-.label {
-    font-size: 13px;
-    color: #666;
-    font-weight: 600;
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
 }
-.value {
-    font-size: 20px;
-    font-weight: 800;
-}
+
 .metric {
+    background: #f8f9ff;
     border-radius: 16px;
     padding: 20px;
-    background: #f8f9ff;
 }
+
+.label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+.value {
+    margin-top: 6px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #111;
+}
+
 .badge {
     display: inline-block;
-    margin-top: 8px;
-    padding: 4px 12px;
+    margin-top: 10px;
+    padding: 4px 14px;
     border-radius: 999px;
     font-size: 11px;
     font-weight: 700;
     color: #fff;
 }
-.green {background:#10b981}
-.red {background:#ef4444}
-.orange {background:#f59e0b}
-.purple {background:#8b5cf6}
+
+.green { background: #10b981; }
+.red { background: #ef4444; }
+.orange { background: #f59e0b; }
+.purple { background: #8b5cf6; }
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<!-- HEADER -->
+<!-- ENCABEZADO -->
 <div class="card header">
     <div>
         <h1>CUADRE</h1>
@@ -94,15 +108,15 @@ body {
     <div class="grid-3">
         <div class="metric">
             <div class="label">Usuario</div>
-            <div class="value" id="usuario"></div>
+            <div class="value" id="usuario">—</div>
         </div>
         <div class="metric">
             <div class="label">Ruta</div>
-            <div class="value" id="ruta"></div>
+            <div class="value" id="ruta">—</div>
         </div>
         <div class="metric">
             <div class="label">ID Inicio</div>
-            <div class="value" id="idinicio"></div>
+            <div class="value" id="idinicio">—</div>
         </div>
     </div>
 </div>
@@ -113,22 +127,25 @@ body {
     <div class="grid-4">
         <div class="metric">
             <div class="label">Valor a Cobrar</div>
-            <div class="value" id="valoracobrar"></div>
+            <div class="value" id="valoracobrar">$0</div>
             <span class="badge green">Estado</span>
         </div>
+
         <div class="metric">
             <div class="label">Valor Cobrado</div>
-            <div class="value" id="valorcobrado"></div>
+            <div class="value" id="valorcobrado">$0</div>
             <span class="badge red">Estado</span>
         </div>
+
         <div class="metric">
             <div class="label">Total Pagos</div>
-            <div class="value" id="pagos"></div>
+            <div class="value" id="pagos">0</div>
             <span class="badge orange">Registros</span>
         </div>
+
         <div class="metric">
             <div class="label">Atrasos</div>
-            <div class="value" id="atrasos"></div>
+            <div class="value" id="atrasos">0</div>
             <span class="badge purple">Estado</span>
         </div>
     </div>
@@ -136,18 +153,26 @@ body {
 
 </div>
 
+<!-- SCRIPT -->
 <script>
-const p = new URLSearchParams(window.location.search);
-const get = k => p.get(k) ?? '';
+const params = new URLSearchParams(window.location.search);
+const get = key => params.get(key) ?? '';
 
-document.getElementById('usuario').innerText = get('Usuario');
-document.getElementById('ruta').innerText = get('Ruta');
-document.getElementById('idinicio').innerText = get('IdInicio');
-document.getElementById('valoracobrar').innerText = get('ValorACobrar');
-document.getElementById('valorcobrado').innerText = get('ValorCobrado');
-document.getElementById('pagos').innerText = get('Pagos');
-document.getElementById('atrasos').innerText = get('At');
-</script>
+const formatNumber = value => {
+    const n = Number(value);
+    return isNaN(n) ? value : n.toLocaleString('es-CO');
+};
 
-</body>
-</html>
+const formatMoney = value => {
+    const n = Number(value);
+    return isNaN(n)
+        ? value
+        : n.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0
+        });
+};
+
+// Información general
+document.getElementById('usuario').innerText = formatNumber(get('Usuario'));
