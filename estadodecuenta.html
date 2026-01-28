@@ -1,165 +1,99 @@
-<!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Consulta de Crédito</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{
-    font-family: Segoe UI, Tahoma, sans-serif;
-    background:#eef2f7;
-    margin:0;
-}
-.container{
-    max-width:900px;
-    margin:40px auto;
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-h1{
-    text-align:center;
-    color:#2c3e50;
-}
-.search{
-    display:flex;
-    gap:10px;
-    margin-bottom:25px;
-}
-.search input{
-    flex:1;
-    padding:12px;
-    font-size:16px;
-}
-.search button{
-    padding:12px 22px;
-    background:#3498db;
-    border:none;
-    color:white;
-    font-size:16px;
-    border-radius:6px;
-    cursor:pointer;
-}
-.card{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:20px;
-    margin-top:20px;
-}
-.label{
-    font-weight:bold;
-    color:#555;
-}
-.list{
-    margin:8px 0 15px 15px;
-}
-.list li{
-    margin-bottom:4px;
-}
-.loading{
-    text-align:center;
-    display:none;
-}
-.error{
-    text-align:center;
-    color:red;
-}
-</style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>Consulta de Crédito</h1>
+<!-- ================= TÍTULO ================= -->
 
-    <div class="search">
-        <input type="text" id="credito" placeholder="Número de crédito">
-        <button onclick="buscar()">Buscar</button>
-    </div>
+<h1 style="text-align:center;">Estado de Cuenta</h1>
 
-    <div class="loading" id="loading">Consultando...</div>
-    <div class="error" id="error"></div>
+<br>
 
-    <div id="resultado"></div>
-</div>
+<!-- ================= PARTE SUPERIOR (NO TABLA DE INGRESOS) ================= -->
 
-<script>
-const APP_ID = "58a661a7-8e9d-4b93-bd3f-052368fe5767"; // 🔴 CAMBIA ESTO
-const API_KEY = "V2-mo67y-hHGRh-UQpNZ-lh1L6-Ptx1j-lyHKe-M5n2b-hcQHK";
-const TABLE = "ingresos";
+<table border="1" cellspacing="0" cellpadding="6" width="100%"
+       style="border-collapse:collapse; text-align:center;">
+  <tr>
+    <td colspan="4">
+      <b>Crédito:</b> &lt;&lt;[id_credito]&gt;&gt;
+      &nbsp;&nbsp;&nbsp;
+      <b>Nombre:</b> &lt;&lt;[nombrecl]&gt;&gt;
+    </td>
+  </tr>
 
-async function buscar(){
-    const credito = document.getElementById("credito").value.trim();
-    if(!credito){
-        alert("Ingrese el crédito");
-        return;
-    }
+  <tr>
+    <td>
+      <b>monto:</b><br>
+      &lt;&lt;[monto]&gt;&gt;
+    </td>
+    <td>
+      <b>fecha crédito:</b><br>
+      &lt;&lt;[fecha_cre]&gt;&gt;
+    </td>
+    <td>
+      <b>días:</b><br>
+      &lt;&lt;[dias]&gt;&gt;
+    </td>
+    <td>
+      <b>día de cobro:</b><br>
+      &lt;&lt;[dia_cobro]&gt;&gt;
+    </td>
+  </tr>
 
-    document.getElementById("loading").style.display="block";
-    document.getElementById("error").innerText="";
-    document.getElementById("resultado").innerHTML="";
+  <tr>
+    <td>
+      <b>saldo:</b><br>
+      &lt;&lt;[saldo]&gt;&gt;
+    </td>
+    <td>
+      <b>fecha fin:</b><br>
+      &lt;&lt;[fecha_fin]&gt;&gt;
+    </td>
+    <td>
+      <b>atrasos:</b><br>
+      &lt;&lt;[atrasos]&gt;&gt;
+    </td>
+    <td>
+      <b>cuotas x pagar:</b><br>
+      &lt;&lt;[saldo_cuotas]&gt;&gt;
+    </td>
+  </tr>
+</table>
 
-    const body = {
-        Action: "Find",
-        Properties: {},
-        Rows: [{ credito }]
-    };
+<br><br>
 
-    try{
-        const res = await fetch(
-            `https://api.appsheet.com/api/v2/apps/${APP_ID}/tables/${TABLE}/Action`,
-            {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json",
-                    "ApplicationAccessKey": API_KEY
-                },
-                body: JSON.stringify(body)
-            }
-        );
+<!-- ================= PARTE INFERIOR – INGRESOS ================= -->
 
-        const data = await res.json();
-        document.getElementById("loading").style.display="none";
+<h2>Ingresos</h2>
 
-        if(!data || data.length === 0){
-            document.getElementById("error").innerText="No hay registros";
-            return;
-        }
+<table border="1" cellspacing="0" cellpadding="6" width="100%"
+       style="border-collapse:collapse; text-align:left; direction:ltr;">
 
-        // Tomamos datos generales del primer registro
-        const base = data[0];
+  <thead>
+    <tr>
+      <th>id_ingreso</th>
+      <th>consecutivo</th>
+      <th>fecha</th>
+      <th>vcuota</th>
+      <th>ingreso</th>
+      <th>atraso</th>
+    </tr>
+  </thead>
 
-        // Construimos listas
-        const fechas = data.map(d => d.fecha).filter(Boolean);
-        const ingresos = data.map(d => d.ingreso).filter(Boolean);
+  <tbody>
+    <tr>
+      <td>&lt;&lt;Start: [Related ingresos]&gt;&gt;&lt;&lt;[id_ingreso]&gt;&gt;</td>
+      <td>&lt;&lt;[consecutivo]&gt;&gt;</td>
+      <td>&lt;&lt;[fecha]&gt;&gt;</td>
+      <td>&lt;&lt;[vcuota]&gt;&gt;</td>
+      <td>&lt;&lt;[ingreso]&gt;&gt;</td>
+      <td>&lt;&lt;[atraso]&gt;&gt;&lt;&lt;End&gt;&gt;</td>
+    </tr>
+  </tbody>
 
-        document.getElementById("resultado").innerHTML = `
-            <div class="card">
-                <p><span class="label">Nombre:</span> ${base.nombre || ""}</p>
-                <p><span class="label">Crédito:</span> ${base.credito}</p>
-                <p><span class="label">Ruta:</span> ${base.rutai || ""}</p>
-
-                <p class="label">Fechas registradas</p>
-                <ul class="list">
-                    ${fechas.map(f => `<li>${f}</li>`).join("")}
-                </ul>
-
-                <p class="label">Ingresos</p>
-                <ul class="list">
-                    ${ingresos.map(i => `<li>$ ${i}</li>`).join("")}
-                </ul>
-            </div>
-        `;
-
-    }catch(e){
-        document.getElementById("loading").style.display="none";
-        document.getElementById("error").innerText="Error consultando AppSheet";
-        console.error(e);
-    }
-}
-</script>
+</table>
 
 </body>
 </html>
