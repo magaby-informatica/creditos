@@ -1,251 +1,251 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprobante de Ingreso</title>
-    <style>
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: #fff;
-            }
-            .receipt-container {
-                box-shadow: none;
-                margin: 0;
-                padding: 0;
-                border: none;
-            }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comprobante de Pago</title>
 
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
-            color: #000;
-            font-weight: bold;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 15px 0;
-            display: flex;
-            justify-content: center;
-        }
+<style>
 
-        .receipt-container {
-            width: 58mm;
-            max-width: 58mm;
-            padding: 5px;
-            box-sizing: border-box;
-            background-color: #fff;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-        }
+@media print{
+body{margin:0;background:#fff;}
+.receipt-container{box-shadow:none;border:none;margin:0;padding:0;}
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+body{
+font-family:'Courier New',monospace;
+font-size:11px;
+font-weight:bold;
+background:#f0f0f0;
+display:flex;
+justify-content:center;
+padding:15px 0;
+}
 
-        .header h1 {
-            font-size: 14px;
-            margin: 0;
-            padding: 0;
-        }
+.receipt-container{
+width:58mm;
+max-width:58mm;
+background:#fff;
+padding:5px;
+box-shadow:0 0 8px rgba(0,0,0,0.1);
+}
 
-        .header p {
-            margin: 2px 0;
-            font-size: 12px;
-        }
+.header{
+text-align:center;
+margin-bottom:10px;
+}
 
-        .section {
-            margin-bottom: 10px;
-            border-bottom: 1px dashed #666;
-            padding-bottom: 8px;
-        }
-        
-        .section:last-of-type {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
+.header h1{
+font-size:14px;
+margin:0;
+}
 
-        .section-title {
-            text-transform: uppercase;
-            text-align: center;
-            font-size: 12px;
-            margin-bottom: 6px;
-        }
-        
-        .item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2px;
-            line-height: 1.3;
-        }
-        
-        .item .label {
-            margin-right: 5px;
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-        
-        .item .value {
-            text-align: right;
-            word-break: break-all;
-        }
-        
-        .full-width {
-            flex-direction: column;
-            align-items: flex-start;
-        }
+.header p{
+margin:2px 0;
+font-size:12px;
+}
 
-        .full-width .value {
-            text-align: left;
-            margin-top: 2px;
-        }
+.section{
+margin-bottom:10px;
+border-bottom:1px dashed #666;
+padding-bottom:8px;
+}
 
-        .footer {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 11px;
-        }
-        
-        .total-line {
-            font-size: 14px;
-            margin-top: 5px;
-            border-top: 1px dashed #666;
-            padding-top: 5px;
-        }
-    </style>
+.section:last-of-type{
+border-bottom:none;
+}
+
+.section-title{
+text-align:center;
+font-size:12px;
+margin-bottom:6px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin-bottom:2px;
+}
+
+.item .label{
+white-space:nowrap;
+}
+
+.item .value{
+text-align:right;
+word-break:break-all;
+}
+
+.full-width{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.total-line{
+font-size:14px;
+margin-top:5px;
+border-top:1px dashed #666;
+padding-top:5px;
+}
+
+.footer{
+text-align:center;
+margin-top:10px;
+font-size:11px;
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="receipt-container">
-        <div class="header">
-            <h1>LA MAQUINA</h1>
-            <p>COMPROBANTE DE PAGO</p>
-            <p>-------------------------</p>
-        </div>
+<div class="receipt-container">
 
-        <div class="section">
-            <p class="section-title">Datos Transacción</p>
-            <div class="item">
-                <span class="label">ID Pago:</span>
-                <span class="value" id="id_pago"></span>
-            </div>
-            <div class="item">
-                <span class="label">Crédito ID:</span>
-                <span class="value" id="credito_asociado"></span>
-            </div>
-            <div class="item">
-                <span class="label">Fecha:</span>
-                <span class="value" id="fecha_pago"></span>
-            </div>
-            <div class="item full-width">
-                <span class="label">Cliente:</span>
-                <span class="value" id="nombrecl"></span>
-            </div>
-        </div>
+<div class="header">
+<h1>LA MAQUINA</h1>
+<p>COMPROBANTE DE PAGO</p>
+<p>-------------------------</p>
+</div>
 
-        <div class="section">
-            <p class="section-title">Detalle del Pago</p>
-            
-            <div class="item">
-                <span class="label">Saldo Ant.:</span>
-                <span class="value" id="saldo_anterior"></span>
-            </div>
-            <div class="item">
-                <span class="label">Cuota Base:</span>
-                <span class="value" id="cuota_base"></span>
-            </div>
-            <div class="item">
-                <span class="label">Sanción/Mora:</span>
-                <span class="value" id="sancion_pagada"></span>
-            </div>
-            <div class="item">
-                <span class="label">Días Atraso:</span>
-                <span class="value" id="dias_atraso"></span>
-            </div>
-            
-            <div class="item total-line">
-                <span class="label">MONTO PAGADO:</span>
-                <span class="value" id="monto_ingreso"></span>
-            </div>
-        </div>
 
-        <div class="section">
-            <p class="section-title">Resumen Final</p>
-            <div class="item">
-                <span class="label">Nuevo Saldo:</span>
-                <span class="value" id="nuevo_saldo"></span>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>Comprobante no fiscal.</p>
-            <p>¡Gracias por su pago!</p>              
-        </div>
-    </div>
+<div class="section">
 
-    <script type="text/javascript">
-        const formatCurrency = (value, locale = 'es-CO', currency = 'COP') => {
-            const num = parseFloat(value);
-            if (isNaN(num)) {
-                return '$0';
-            }
-            try {
-                return new Intl.NumberFormat(locale, {
-                    style: 'currency',
-                    currency: currency,
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                }).format(num);
-            } catch (e) {
-                return `$${num.toLocaleString('es-ES')}`; 
-            }
-        };
+<p class="section-title">Datos Transacción</p>
 
-        window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
+<div class="item">
+<span class="label">ID Pago:</span>
+<span class="value" id="id_pago"></span>
+</div>
 
-            const getParam = (paramName) => {
-                const value = params.get(paramName);
-                // Si el valor es nulo o vacío, devuelve "N/A" o "0" para números.
-                if (value === null || value.trim() === '') {
-                    // Trata las cantidades como 0 si están vacías, para el formato de moneda.
-                    return ['saldo_anterior', 'monto_ingreso', 'cuota_base', 'sancion_pagada', 'nuevo_saldo'].includes(paramName) ? '0' : 'N/A';
-                }
-                return value.trim();
-            };
-            
-            const setText = (id, text) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.innerText = text;
-                }
-            };
+<div class="item">
+<span class="label">Crédito ID:</span>
+<span class="value" id="credito_asociado"></span>
+</div>
 
-            // Configuración de Moneda
-            const locale = 'es-CO';
-            const currencyCode = 'COP';
+<div class="item">
+<span class="label">Fecha:</span>
+<span class="value" id="fecha_pago"></span>
+</div>
 
-            // Parámetros sin formato de moneda
-            setText('id_pago', getParam('id_ingreso'));
-            setText('credito_asociado', getParam('id_credito'));
-            setText('fecha_pago', getParam('fecha'));
-            setText('nombrecl', getParam('nombrecl'));
-            setText('dias_atraso', getParam('dias_atraso'));
+<div class="item full-width">
+<span class="label">Cliente:</span>
+<span class="value" id="nombrecl"></span>
+</div>
 
-            // Parámetros con formato de moneda
-            setText('monto_ingreso', formatCurrency(getParam('monto_ingreso'), locale, currencyCode));
-            setText('saldo_anterior', formatCurrency(getParam('saldo_ant'), locale, currencyCode));
-            setText('cuota_base', formatCurrency(getParam('cuota_esperada'), locale, currencyCode));
-            setText('sancion_pagada', formatCurrency(getParam('sancion'), locale, currencyCode));
-            setText('nuevo_saldo', formatCurrency(getParam('nuevo_saldo'), locale, currencyCode));
+</div>
 
-            setTimeout(() => {
-                window.print();
-            }, 300);
-        };
-    </script>
+
+<div class="section">
+
+<p class="section-title">Detalle del Pago</p>
+
+<div class="item">
+<span class="label">Saldo Actual:</span>
+<span class="value" id="saldo_anterior"></span>
+</div>
+
+<div class="item">
+<span class="label">Valor Cuota:</span>
+<span class="value" id="cuota_base"></span>
+</div>
+
+<div class="item">
+<span class="label">Cuota Actual:</span>
+<span class="value" id="cuota_numero"></span>
+</div>
+
+<div class="item">
+<span class="label">Saldo Real:</span>
+<span class="value" id="saldo_real"></span>
+</div>
+
+<div class="item">
+<span class="label">Días Atraso:</span>
+<span class="value" id="dias_atraso"></span>
+</div>
+
+<div class="item">
+<span class="label">Sanción/Mora:</span>
+<span class="value" id="sancion_pagada"></span>
+</div>
+
+<div class="item total-line">
+<span class="label">MONTO PAGADO:</span>
+<span class="value" id="monto_ingreso"></span>
+</div>
+
+</div>
+
+
+<div class="section">
+
+<p class="section-title">Resumen Final</p>
+
+<div class="item">
+<span class="label">Nuevo Saldo:</span>
+<span class="value" id="nuevo_saldo"></span>
+</div>
+
+</div>
+
+
+<div class="footer">
+<p>Comprobante no fiscal</p>
+<p>¡Gracias por su pago!</p>
+</div>
+
+</div>
+
+
+<script>
+
+const formatCurrency=(value)=>{
+const num=parseFloat(value);
+if(isNaN(num))return "$0";
+
+return new Intl.NumberFormat('es-CO',{
+style:'currency',
+currency:'COP',
+minimumFractionDigits:0
+}).format(num);
+}
+
+window.onload=function(){
+
+const params=new URLSearchParams(window.location.search)
+
+const getParam=(p)=>{
+const v=params.get(p)
+return(v==null||v=="")?"0":v
+}
+
+const setText=(id,val)=>{
+const el=document.getElementById(id)
+if(el)el.innerText=val
+}
+
+setText("id_pago",getParam("id_ingreso"))
+setText("credito_asociado",getParam("id_credito"))
+setText("fecha_pago",getParam("fecha"))
+setText("nombrecl",getParam("nombrecl"))
+setText("dias_atraso",getParam("dias_atraso"))
+
+setText("cuota_numero",getParam("cuota_numero"))
+
+setText("monto_ingreso",formatCurrency(getParam("monto_ingreso")))
+setText("saldo_anterior",formatCurrency(getParam("saldo_ant")))
+setText("cuota_base",formatCurrency(getParam("cuota_esperada")))
+setText("sancion_pagada",formatCurrency(getParam("sancion")))
+setText("nuevo_saldo",formatCurrency(getParam("nuevo_saldo")))
+setText("saldo_real",formatCurrency(getParam("saldo_real")))
+
+setTimeout(()=>{
+window.print()
+},300)
+
+}
+
+</script>
 
 </body>
 </html>
