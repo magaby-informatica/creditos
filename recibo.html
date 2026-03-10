@@ -3,95 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comprobante de Pago</title>
+<title>Recibo</title>
 
 <style>
 
-@media print{
-body{margin:0;background:#fff;}
-.receipt-container{box-shadow:none;border:none;margin:0;padding:0;}
-}
-
 body{
-font-family:'Courier New',monospace;
+font-family: monospace;
 font-size:11px;
 font-weight:bold;
-background:#f0f0f0;
 display:flex;
 justify-content:center;
-padding:15px 0;
+background:#eee;
 }
 
-.receipt-container{
+.ticket{
 width:58mm;
-max-width:58mm;
-background:#fff;
-padding:5px;
-box-shadow:0 0 8px rgba(0,0,0,0.1);
+background:white;
+padding:6px;
 }
 
-.header{
-text-align:center;
-margin-bottom:10px;
-}
+.center{text-align:center}
 
-.header h1{
-font-size:14px;
-margin:0;
-}
-
-.header p{
-margin:2px 0;
-font-size:12px;
-}
-
-.section{
-margin-bottom:10px;
-border-bottom:1px dashed #666;
-padding-bottom:8px;
-}
-
-.section:last-of-type{
-border-bottom:none;
-}
-
-.section-title{
-text-align:center;
-font-size:12px;
-margin-bottom:6px;
-}
-
-.item{
+.line{
 display:flex;
 justify-content:space-between;
-margin-bottom:2px;
+margin:2px 0;
 }
 
-.item .label{
-white-space:nowrap;
+.total{
+border-top:1px dashed #000;
+margin-top:4px;
+padding-top:4px;
+font-size:13px;
 }
 
-.item .value{
-text-align:right;
-word-break:break-all;
-}
-
-.full-width{
-flex-direction:column;
-align-items:flex-start;
-}
-
-.total-line{
-font-size:14px;
-margin-top:5px;
-border-top:1px dashed #666;
-padding-top:5px;
-}
-
-.footer{
-text-align:center;
-margin-top:10px;
-font-size:11px;
+hr{
+border:none;
+border-top:1px dashed #000;
+margin:6px 0;
 }
 
 </style>
@@ -99,151 +48,114 @@ font-size:11px;
 
 <body>
 
-<div class="receipt-container">
+<div class="ticket">
 
-<div class="header">
-<h1>LA MAQUINA</h1>
-<p>COMPROBANTE DE PAGO</p>
-<p>-------------------------</p>
+<div class="center">
+<b>LA MAQUINA</b><br>
+COMPROBANTE DE PAGO
 </div>
 
+<hr>
 
-<div class="section">
-
-<p class="section-title">Datos Transacción</p>
-
-<div class="item">
-<span class="label">ID Pago:</span>
-<span class="value" id="id_pago"></span>
+<div class="line">
+<span>ID:</span>
+<span id="id"></span>
 </div>
 
-<div class="item">
-<span class="label">Crédito ID:</span>
-<span class="value" id="credito_asociado"></span>
+<div class="line">
+<span>CRÉDITO:</span>
+<span id="credito"></span>
 </div>
 
-<div class="item">
-<span class="label">Fecha:</span>
-<span class="value" id="fecha_pago"></span>
+<div class="line">
+<span>FECHA:</span>
+<span id="fecha"></span>
 </div>
 
-<div class="item full-width">
-<span class="label">Cliente:</span>
-<span class="value" id="nombrecl"></span>
+<div>
+CLIENTE:<br>
+<span id="cliente"></span>
 </div>
 
+<hr>
+
+<div class="center">DETALLE DEL PAGO</div>
+
+<div class="line">
+<span>SALDO:</span>
+<span id="saldo"></span>
 </div>
 
-
-<div class="section">
-
-<p class="section-title">Detalle del Pago</p>
-
-<div class="item">
-<span class="label">Saldo Actual:</span>
-<span class="value" id="saldo_anterior"></span>
+<div class="line">
+<span>CUOTA:</span>
+<span id="cuota"></span>
 </div>
 
-<div class="item">
-<span class="label">Valor Cuota:</span>
-<span class="value" id="cuota_base"></span>
+<div class="line">
+<span>CUOTA No:</span>
+<span id="cuotan"></span>
 </div>
 
-<div class="item">
-<span class="label">Cuota Numero:</span>
-<span class="value" id="cuota_numero"></span>
+<div class="line">
+<span>ATRASO:</span>
+<span id="atraso"></span>
 </div>
 
-<div class="item">
-<span class="label">Nuevo Saldo:</span>
-<span class="value" id="saldo_real"></span>
+<div class="line">
+<span>MORA:</span>
+<span id="mora"></span>
 </div>
 
-<div class="item">
-<span class="label">Días Atraso:</span>
-<span class="value" id="dias_atraso"></span>
+<div class="line total">
+<span>PAGO:</span>
+<span id="pago"></span>
 </div>
 
-<div class="item">
-<span class="label">Sanción/Mora:</span>
-<span class="value" id="sancion_pagada"></span>
+<hr>
+
+<div class="line">
+<span>NUEVO SALDO:</span>
+<span id="nsaldo"></span>
 </div>
 
-<div class="item total-line">
-<span class="label">MONTO PAGADO:</span>
-<span class="value" id="monto_ingreso"></span>
-</div>
+<hr>
 
-</div>
-
-
-<div class="section">
-
-<p class="section-title">Resumen Final</p>
-
-<div class="item">
-<span class="label">Nuevo Saldo:</span>
-<span class="value" id="nuevo_saldo"></span>
+<div class="center">
+Comprobante no fiscal<br>
+Gracias por su pago
 </div>
 
 </div>
-
-
-<div class="footer">
-<p>Comprobante no fiscal</p>
-<p>¡Gracias por su pago!</p>
-</div>
-
-</div>
-
 
 <script>
 
-const formatCurrency=(value)=>{
-const num=parseFloat(value);
-if(isNaN(num))return "$0";
-
+function money(v){
 return new Intl.NumberFormat('es-CO',{
 style:'currency',
 currency:'COP',
 minimumFractionDigits:0
-}).format(num);
+}).format(v)
 }
 
-window.onload=function(){
-
-const params=new URLSearchParams(window.location.search)
-
-const getParam=(p)=>{
-const v=params.get(p)
-return(v==null||v=="")?"0":v
+function g(p){
+return new URLSearchParams(window.location.search).get(p) || 0
 }
 
-const setText=(id,val)=>{
-const el=document.getElementById(id)
-if(el)el.innerText=val
-}
+document.getElementById("id").innerText=g("id_ingreso")
+document.getElementById("credito").innerText=g("id_credito")
+document.getElementById("fecha").innerText=g("fecha")
+document.getElementById("cliente").innerText=g("nombrecl")
 
-setText("id_pago",getParam("id_ingreso"))
-setText("credito_asociado",getParam("id_credito"))
-setText("fecha_pago",getParam("fecha"))
-setText("nombrecl",getParam("nombrecl"))
-setText("dias_atraso",getParam("dias_atraso"))
+document.getElementById("saldo").innerText=money(g("saldo_ant"))
+document.getElementById("cuota").innerText=money(g("cuota_esperada"))
+document.getElementById("cuotan").innerText=g("cuota_numero")
+document.getElementById("atraso").innerText=g("dias_atraso")
+document.getElementById("mora").innerText=money(g("sancion"))
 
-setText("cuota_numero",getParam("cuota_numero"))
+document.getElementById("pago").innerText=money(g("monto_ingreso"))
+document.getElementById("nsaldo").innerText=money(g("nuevo_saldo"))
 
-setText("monto_ingreso",formatCurrency(getParam("monto_ingreso")))
-setText("saldo_anterior",formatCurrency(getParam("saldo_ant")))
-setText("cuota_numero",formatCurrency(getParam("cuota_numero")))
-setText("sancion_pagada",formatCurrency(getParam("sancion")))
-setText("nuevo_saldo",formatCurrency(getParam("nuevo_saldo")))
-setText("saldo_real",formatCurrency(getParam("saldo_real")))
-
-setTimeout(()=>{
-window.print()
-},300)
-
-}
+setTimeout(()=>{window.print()},200)
 
 </script>
 
