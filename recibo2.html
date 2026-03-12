@@ -44,7 +44,7 @@ font-size:14px;
 
 <body>
 
-<div class="titulo" id="empresa">EMPRESA</div>
+<div class="titulo" id="empresa"></div>
 <div class="center">RECIBO DE PAGO</div>
 
 <div class="linea"></div>
@@ -102,12 +102,6 @@ Cliente: <span id="cliente"></span>
 Gracias por su pago
 </div>
 
-<br>
-
-<div class="center">
-www.magaby.com
-</div>
-
 <script>
 
 function dinero(v){
@@ -115,56 +109,26 @@ return new Intl.NumberFormat('es-CO').format(v || 0);
 }
 
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id_ingreso");
 
-const appId = "58a661a7-8e9d-4b93-bd3f-052368fe5767";
-const accessKey = "V2-mo67y-hHGRh-UQpNZ-lh1L6-Ptx1j-lyHKe-M5n2b-hcQHK";
+document.getElementById("empresa").innerText = params.get("empresa");
+document.getElementById("id_ingreso").innerText = params.get("id");
+document.getElementById("fecha").innerText = params.get("fecha");
+document.getElementById("cliente").innerText = params.get("cliente");
 
-const url = "https://api.appsheet.com/api/v2/apps/"+appId+"/tables/ingresos/Action";
+document.getElementById("credito").innerText = params.get("credito");
+document.getElementById("cuota").innerText = params.get("cuota");
 
-const body = {
-"Action":"Get",
-"Properties":{},
-"Rows":[]
-};
-
-fetch(url,{
-method:"POST",
-headers:{
-"ApplicationAccessKey":accessKey,
-"Content-Type":"application/json"
-},
-body:JSON.stringify(body)
-})
-.then(r=>r.json())
-.then(data=>{
-
-let r = data.Rows.find(x => x.id_ingreso == id);
-
-if(!r){
-alert("No se encontró el recibo");
-return;
-}
-
-document.getElementById("empresa").innerText = r.EmpresaIg || "";
-document.getElementById("id_ingreso").innerText = r.id_ingreso || "";
-document.getElementById("fecha").innerText = r.fecha || "";
-document.getElementById("cliente").innerText = r.nombre || "";
-document.getElementById("credito").innerText = r.credito || "";
-document.getElementById("cuota").innerText = r.CuotaNumero || "";
-
-document.getElementById("valor").innerText = "$"+dinero(r.cuota);
-document.getElementById("atrasos").innerText = r.atraso || 0;
-document.getElementById("mora").innerText = "$"+dinero(r.sancion);
-document.getElementById("ingreso").innerText = "$"+dinero(r.ingreso);
-document.getElementById("saldo").innerText = "$"+dinero(r.saldoi);
+document.getElementById("valor").innerText = "$"+dinero(params.get("valor"));
+document.getElementById("atrasos").innerText = params.get("atrasos");
+document.getElementById("mora").innerText = "$"+dinero(params.get("mora"));
+document.getElementById("ingreso").innerText = "$"+dinero(params.get("pago"));
+document.getElementById("saldo").innerText = "$"+dinero(params.get("saldo"));
 
 setTimeout(()=>{
 window.print();
-},600);
-
-});
+},500);
 
 </script>
+
 </body>
 </html>
