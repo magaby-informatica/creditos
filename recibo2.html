@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+body{
+width:58mm;
+font-family:monospace;
+font-size:12px;
+margin:0;
+padding:5px;
+}
+
+.titulo{
+text-align:center;
+font-size:16px;
+font-weight:bold;
+}
+
+.subtitulo{
+text-align:center;
+font-size:12px;
+}
+
+.linea{
+border-top:1px dashed black;
+margin:6px 0;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+}
+
+.center{
+text-align:center;
+}
+
+.qr{
+text-align:center;
+margin-top:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="titulo" id="empresa"></div>
+<div class="subtitulo">RECIBO DE PAGO</div>
+
+<div class="linea"></div>
+
+<div>
+Recibo #: <span id="id_ingreso"></span><br>
+Fecha: <span id="fecha"></span><br>
+Cliente: <span id="cliente"></span><br>
+CC: <span id="cc"></span>
+</div>
+
+<div class="linea"></div>
+
+<div class="row">
+<span>Credito</span>
+<span id="credito"></span>
+</div>
+
+<div class="row">
+<span>Ruta</span>
+<span id="ruta"></span>
+</div>
+
+<div class="row">
+<span>Cuota</span>
+<span id="cuota"></span>
+</div>
+
+<div class="row">
+<span>Pagadas</span>
+<span id="pagadas"></span>
+</div>
+
+<div class="row">
+<span>Atrasos</span>
+<span id="atrasos"></span>
+</div>
+
+<div class="row">
+<span>Valor cuota</span>
+<span id="valor"></span>
+</div>
+
+<div class="row">
+<span>Mora</span>
+<span id="mora"></span>
+</div>
+
+<div class="row">
+<span>Total pago</span>
+<span id="ingreso"></span>
+</div>
+
+<div class="linea"></div>
+
+<div class="row">
+<span>Saldo</span>
+<span id="saldo"></span>
+</div>
+
+<div class="linea"></div>
+
+<div class="qr">
+<img id="qr">
+</div>
+
+<div class="center">
+Gracias por su pago
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+function g(v){
+return params.get(v) || "";
+}
+
+document.getElementById("empresa").innerText = g("empresa");
+document.getElementById("id_ingreso").innerText = g("id_ingreso");
+document.getElementById("credito").innerText = g("credito");
+document.getElementById("cliente").innerText = g("cliente");
+document.getElementById("cc").innerText = g("cc");
+document.getElementById("cuota").innerText = g("cuota");
+document.getElementById("valor").innerText = g("valor");
+document.getElementById("atrasos").innerText = g("atrasos");
+document.getElementById("mora").innerText = g("mora");
+document.getElementById("ingreso").innerText = g("ingreso");
+document.getElementById("saldo").innerText = g("saldo");
+document.getElementById("pagadas").innerText = g("pagadas");
+document.getElementById("ruta").innerText = g("ruta");
+
+const hoy = new Date();
+
+document.getElementById("fecha").innerText =
+hoy.toLocaleDateString();
+
+document.getElementById("qr").src =
+"https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl="+g("credito");
+
+</script>
+
+</body>
+</html>
