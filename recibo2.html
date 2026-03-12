@@ -123,13 +123,9 @@ const accessKey = "V2-mo67y-hHGRh-UQpNZ-lh1L6-Ptx1j-lyHKe-M5n2b-hcQHK";
 const url = "https://api.appsheet.com/api/v2/apps/"+appId+"/tables/ingresos/Action";
 
 const body = {
-"Action":"Find",
+"Action":"Get",
 "Properties":{},
-"Rows":[
-{
-"id_ingreso":id
-}
-]
+"Rows":[]
 };
 
 fetch(url,{
@@ -143,20 +139,25 @@ body:JSON.stringify(body)
 .then(r=>r.json())
 .then(data=>{
 
-let r = data.Rows[0];
+let r = data.Rows.find(x => x.id_ingreso == id);
 
-document.getElementById("empresa").innerText = r.EmpresaCr;
-document.getElementById("id_ingreso").innerText = r.id_ingreso;
-document.getElementById("fecha").innerText = r.fecha;
-document.getElementById("cliente").innerText = r.nombrecl;
-document.getElementById("credito").innerText = r.id_credito;
-document.getElementById("cuota").innerText = r.cuota_numero;
+if(!r){
+alert("No se encontró el recibo");
+return;
+}
 
-document.getElementById("valor").innerText = "$"+dinero(r.valor_cuota);
-document.getElementById("atrasos").innerText = r.atrasosc;
-document.getElementById("mora").innerText = "$"+dinero(r.sancion_mora);
+document.getElementById("empresa").innerText = r.EmpresaIg || "";
+document.getElementById("id_ingreso").innerText = r.id_ingreso || "";
+document.getElementById("fecha").innerText = r.fecha || "";
+document.getElementById("cliente").innerText = r.nombre || "";
+document.getElementById("credito").innerText = r.credito || "";
+document.getElementById("cuota").innerText = r.CuotaNumero || "";
+
+document.getElementById("valor").innerText = "$"+dinero(r.cuota);
+document.getElementById("atrasos").innerText = r.atraso || 0;
+document.getElementById("mora").innerText = "$"+dinero(r.sancion);
 document.getElementById("ingreso").innerText = "$"+dinero(r.ingreso);
-document.getElementById("saldo").innerText = "$"+dinero(r.saldo);
+document.getElementById("saldo").innerText = "$"+dinero(r.saldoi);
 
 setTimeout(()=>{
 window.print();
@@ -165,6 +166,5 @@ window.print();
 });
 
 </script>
-
 </body>
 </html>
