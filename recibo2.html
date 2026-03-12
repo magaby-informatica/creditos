@@ -10,12 +10,18 @@ width:58mm;
 font-family:monospace;
 font-size:12px;
 padding:5px;
+margin:0;
 }
 
 .titulo{
 text-align:center;
 font-size:16px;
 font-weight:bold;
+}
+
+.subtitulo{
+text-align:center;
+font-size:12px;
 }
 
 .linea{
@@ -32,6 +38,11 @@ justify-content:space-between;
 text-align:center;
 }
 
+.total{
+font-weight:bold;
+font-size:14px;
+}
+
 </style>
 
 </head>
@@ -39,7 +50,7 @@ text-align:center;
 <body>
 
 <div class="titulo" id="empresa"></div>
-<div class="center">RECIBO DE PAGO</div>
+<div class="subtitulo">RECIBO DE PAGO</div>
 
 <div class="linea"></div>
 
@@ -76,7 +87,9 @@ Cliente: <span id="cliente"></span>
 <span id="mora"></span>
 </div>
 
-<div class="row">
+<div class="linea"></div>
+
+<div class="row total">
 <span>Pago</span>
 <span id="ingreso"></span>
 </div>
@@ -94,13 +107,22 @@ Cliente: <span id="cliente"></span>
 Gracias por su pago
 </div>
 
+<br>
+<div class="center">
+www.magaby.com
+</div>
+
 <script>
+
+function dinero(valor){
+return new Intl.NumberFormat('es-CO').format(valor);
+}
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id_ingreso");
 
 const appId = "58a661a7-8e9d-4b93-bd3f-052368fe5767";
-const accessKey = "TU_API_KEY";
+const accessKey = "TU_API_KEY_AQUI";
 
 const url =
 "https://api.appsheet.com/api/v2/apps/"+appId+"/tables/ingresos/Action";
@@ -134,11 +156,20 @@ document.getElementById("fecha").innerText = r.fecha;
 document.getElementById("cliente").innerText = r.nombrecl;
 document.getElementById("credito").innerText = r.id_credito;
 document.getElementById("cuota").innerText = r.cuota_numero;
-document.getElementById("valor").innerText = r.valor_cuota;
+
+document.getElementById("valor").innerText = "$"+dinero(r.valor_cuota);
 document.getElementById("atrasos").innerText = r.atrasosc;
-document.getElementById("mora").innerText = r.sancion_mora;
-document.getElementById("ingreso").innerText = r.ingreso;
-document.getElementById("saldo").innerText = r.saldo;
+document.getElementById("mora").innerText = "$"+dinero(r.sancion_mora);
+document.getElementById("ingreso").innerText = "$"+dinero(r.ingreso);
+document.getElementById("saldo").innerText = "$"+dinero(r.saldo);
+
+setTimeout(()=>{
+window.print();
+},800);
+
+setTimeout(()=>{
+window.close();
+},2000);
 
 });
 
