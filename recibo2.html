@@ -9,33 +9,28 @@ body{
 width:58mm;
 font-family:monospace;
 font-size:12px;
-padding:5px;
+padding:4px;
 margin:0;
 }
 
 .titulo{
 text-align:center;
-font-size:16px;
+font-size:15px;
 font-weight:bold;
 }
 
-.subtitulo{
+.center{
 text-align:center;
-font-size:12px;
 }
 
 .linea{
 border-top:1px dashed black;
-margin:6px 0;
+margin:5px 0;
 }
 
 .row{
 display:flex;
 justify-content:space-between;
-}
-
-.center{
-text-align:center;
 }
 
 .total{
@@ -49,8 +44,8 @@ font-size:14px;
 
 <body>
 
-<div class="titulo" id="empresa"></div>
-<div class="subtitulo">RECIBO DE PAGO</div>
+<div class="titulo" id="empresa">EMPRESA</div>
+<div class="center">RECIBO DE PAGO</div>
 
 <div class="linea"></div>
 
@@ -90,7 +85,7 @@ Cliente: <span id="cliente"></span>
 <div class="linea"></div>
 
 <div class="row total">
-<span>Pago</span>
+<span>PAGO</span>
 <span id="ingreso"></span>
 </div>
 
@@ -108,14 +103,15 @@ Gracias por su pago
 </div>
 
 <br>
+
 <div class="center">
 www.magaby.com
 </div>
 
 <script>
 
-function dinero(valor){
-return new Intl.NumberFormat('es-CO').format(valor);
+function dinero(v){
+return new Intl.NumberFormat('es-CO').format(v || 0);
 }
 
 const params = new URLSearchParams(window.location.search);
@@ -124,8 +120,7 @@ const id = params.get("id_ingreso");
 const appId = "58a661a7-8e9d-4b93-bd3f-052368fe5767";
 const accessKey = "V2-mo67y-hHGRh-UQpNZ-lh1L6-Ptx1j-lyHKe-M5n2b-hcQHK";
 
-const url =
-"https://api.appsheet.com/api/v2/apps/"+appId+"/tables/ingresos/Action";
+const url = "https://api.appsheet.com/api/v2/apps/"+appId+"/tables/ingresos/Action";
 
 const body = {
 "Action":"Find",
@@ -165,11 +160,7 @@ document.getElementById("saldo").innerText = "$"+dinero(r.saldo);
 
 setTimeout(()=>{
 window.print();
-},800);
-
-setTimeout(()=>{
-window.close();
-},2000);
+},600);
 
 });
 
