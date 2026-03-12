@@ -84,22 +84,31 @@ Cliente: <span id="cliente"></span>
 
 <div class="linea"></div>
 
-<div class="row total">
-<span>PAGO</span>
-<span id="ingreso"></span>
-</div>
-
-<div class="linea"></div>
-
 <div class="row">
 <span>Saldo</span>
 <span id="saldo"></span>
+</div>
+
+<div class="row total">
+<span>Pago</span>
+<span id="ingreso"></span>
+</div>
+
+<div class="row">
+<span>Nuevo saldo</span>
+<span id="nuevo_saldo"></span>
 </div>
 
 <div class="linea"></div>
 
 <div class="center">
 Gracias por su pago
+</div>
+
+<br>
+
+<div class="center">
+www.magaby.com
 </div>
 
 <script>
@@ -121,8 +130,16 @@ document.getElementById("cuota").innerText = params.get("cuota");
 document.getElementById("valor").innerText = "$"+dinero(params.get("valor"));
 document.getElementById("atrasos").innerText = params.get("atrasos");
 document.getElementById("mora").innerText = "$"+dinero(params.get("mora"));
-document.getElementById("ingreso").innerText = "$"+dinero(params.get("pago"));
+
 document.getElementById("saldo").innerText = "$"+dinero(params.get("saldo"));
+document.getElementById("ingreso").innerText = "$"+dinero(params.get("pago"));
+
+let saldo = Number(params.get("saldo")) || 0;
+let pago = Number(params.get("pago")) || 0;
+
+let nuevoSaldo = saldo - pago;
+
+document.getElementById("nuevo_saldo").innerText = "$"+dinero(nuevoSaldo);
 
 setTimeout(()=>{
 window.print();
