@@ -9,7 +9,6 @@ body{
 width:58mm;
 font-family:monospace;
 font-size:12px;
-margin:0;
 padding:5px;
 }
 
@@ -17,11 +16,6 @@ padding:5px;
 text-align:center;
 font-size:16px;
 font-weight:bold;
-}
-
-.subtitulo{
-text-align:center;
-font-size:12px;
 }
 
 .linea{
@@ -38,11 +32,6 @@ justify-content:space-between;
 text-align:center;
 }
 
-.qr{
-text-align:center;
-margin-top:5px;
-}
-
 </style>
 
 </head>
@@ -50,15 +39,14 @@ margin-top:5px;
 <body>
 
 <div class="titulo" id="empresa"></div>
-<div class="subtitulo">RECIBO DE PAGO</div>
+<div class="center">RECIBO DE PAGO</div>
 
 <div class="linea"></div>
 
 <div>
-Recibo #: <span id="id_ingreso"></span><br>
+Recibo: <span id="id_ingreso"></span><br>
 Fecha: <span id="fecha"></span><br>
-Cliente: <span id="cliente"></span><br>
-CC: <span id="cc"></span>
+Cliente: <span id="cliente"></span>
 </div>
 
 <div class="linea"></div>
@@ -69,23 +57,8 @@ CC: <span id="cc"></span>
 </div>
 
 <div class="row">
-<span>Ruta</span>
-<span id="ruta"></span>
-</div>
-
-<div class="row">
 <span>Cuota</span>
 <span id="cuota"></span>
-</div>
-
-<div class="row">
-<span>Pagadas</span>
-<span id="pagadas"></span>
-</div>
-
-<div class="row">
-<span>Atrasos</span>
-<span id="atrasos"></span>
 </div>
 
 <div class="row">
@@ -94,12 +67,17 @@ CC: <span id="cc"></span>
 </div>
 
 <div class="row">
+<span>Atrasos</span>
+<span id="atrasos"></span>
+</div>
+
+<div class="row">
 <span>Mora</span>
 <span id="mora"></span>
 </div>
 
 <div class="row">
-<span>Total pago</span>
+<span>Pago</span>
 <span id="ingreso"></span>
 </div>
 
@@ -112,10 +90,6 @@ CC: <span id="cc"></span>
 
 <div class="linea"></div>
 
-<div class="qr">
-<img id="qr">
-</div>
-
 <div class="center">
 Gracias por su pago
 </div>
@@ -123,32 +97,50 @@ Gracias por su pago
 <script>
 
 const params = new URLSearchParams(window.location.search);
+const id = params.get("id_ingreso");
 
-function g(v){
-return params.get(v) || "";
+const appId = "58a661a7-8e9d-4b93-bd3f-052368fe5767";
+const accessKey = "TU_API_KEY";
+
+const url =
+"https://api.appsheet.com/api/v2/apps/"+appId+"/tables/ingresos/Action";
+
+const body = {
+"Action":"Find",
+"Properties":{},
+"Rows":[
+{
+"id_ingreso":id
 }
+]
+};
 
-document.getElementById("empresa").innerText = g("empresa");
-document.getElementById("id_ingreso").innerText = g("id_ingreso");
-document.getElementById("credito").innerText = g("credito");
-document.getElementById("cliente").innerText = g("cliente");
-document.getElementById("cc").innerText = g("cc");
-document.getElementById("cuota").innerText = g("cuota");
-document.getElementById("valor").innerText = g("valor");
-document.getElementById("atrasos").innerText = g("atrasos");
-document.getElementById("mora").innerText = g("mora");
-document.getElementById("ingreso").innerText = g("ingreso");
-document.getElementById("saldo").innerText = g("saldo");
-document.getElementById("pagadas").innerText = g("pagadas");
-document.getElementById("ruta").innerText = g("ruta");
+fetch(url,{
+method:"POST",
+headers:{
+"ApplicationAccessKey":accessKey,
+"Content-Type":"application/json"
+},
+body:JSON.stringify(body)
+})
+.then(r=>r.json())
+.then(data=>{
 
-const hoy = new Date();
+let r = data.Rows[0];
 
-document.getElementById("fecha").innerText =
-hoy.toLocaleDateString();
+document.getElementById("empresa").innerText = r.EmpresaCr;
+document.getElementById("id_ingreso").innerText = r.id_ingreso;
+document.getElementById("fecha").innerText = r.fecha;
+document.getElementById("cliente").innerText = r.nombrecl;
+document.getElementById("credito").innerText = r.id_credito;
+document.getElementById("cuota").innerText = r.cuota_numero;
+document.getElementById("valor").innerText = r.valor_cuota;
+document.getElementById("atrasos").innerText = r.atrasosc;
+document.getElementById("mora").innerText = r.sancion_mora;
+document.getElementById("ingreso").innerText = r.ingreso;
+document.getElementById("saldo").innerText = r.saldo;
 
-document.getElementById("qr").src =
-"https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl="+g("credito");
+});
 
 </script>
 
