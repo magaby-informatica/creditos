@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+/* Centrado del recibo en la página del navegador */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Fondo gris para resaltar el recibo */
+}
+
+body {
+    width: 90mm; /* 9 cm de ancho */
+    height: 70mm; /* 7 cm de alto */
+    font-family: monospace;
+    font-size: 12px;
+    padding: 10px;
+    margin: 0;
+    background-color: white; /* Color del papel */
+    box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Sombra para vista previa */
+    box-sizing: border-box;
+    overflow: hidden; /* Evita scroll dentro del recibo */
+    color: black; /* Texto base en negro */
+}
+
+.titulo{
+    text-align:center;
+    font-size:15px;
+    font-weight:bold;
+    color: black;
+}
+
+.center{
+    text-align:center;
+    color: black;
+}
+
+.linea{
+    border-top:1px dashed black;
+    margin:5px 0;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    color: black;
+}
+
+.total{
+    font-weight:bold;
+    font-size:14px;
+}
+
+/* --- COLORES: Labels en Negro y Dinámicos en Azul --- */
+span {
+    color: black; /* Por defecto los labels que no tienen ID */
+}
+
+span[id] {
+    color: blue !important; /* Todos los datos dinámicos con ID en azul */
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div style="width: 100%;">
+    <div class="titulo" id="empresa"></div>
+    <div class="center">RECIBO DE PAGO</div>
+
+    <div class="linea"></div>
+
+    <div>
+    <span>Recibo:</span> <span id="id_ingreso"></span><br>
+    <span>Fecha:</span> <span id="fecha"></span><br>
+    <span>Cliente:</span> <span id="cliente"></span>
+    </div>
+
+    <div class="linea"></div>
+
+    <div class="row">
+    <span>Credito</span>
+    <span id="credito"></span>
+    </div>
+
+    <div class="row">
+    <span>Cuota</span>
+    <span id="cuota"></span>
+    </div>
+
+    <div class="row">
+    <span>Valor cuota</span>
+    <span id="valor"></span>
+    </div>
+
+    <div class="row">
+    <span>Atrasos</span>
+    <span id="atrasos"></span>
+    </div>
+
+    <div class="row">
+    <span>Mora</span>
+    <span id="mora"></span>
+    </div>
+
+    <div class="linea"></div>
+
+    <div class="row">
+    <span>Saldo</span>
+    <span id="saldo"></span>
+    </div>
+
+    <div class="row total">
+    <span>Pago</span>
+    <span id="ingreso"></span>
+    </div>
+
+    <div class="row">
+    <span>Nuevo saldo</span>
+    <span id="nuevo_saldo"></span>
+    </div>
+
+    <div class="linea"></div>
+
+    <div class="center">
+    Gracias por su pago
+    </div>
+
+    <br>
+
+    <div class="center">
+    www.magabyinformatica.com.co
+    </div>
+</div>
+
+<script>
+
+function dinero(v){
+return new Intl.NumberFormat('es-CO').format(v || 0);
+}
+
+const params = new URLSearchParams(window.location.search);
+
+document.getElementById("empresa").innerText = params.get("empresa");
+document.getElementById("id_ingreso").innerText = params.get("id");
+document.getElementById("fecha").innerText = params.get("fecha");
+document.getElementById("cliente").innerText = params.get("cliente");
+
+document.getElementById("credito").innerText = params.get("credito");
+document.getElementById("cuota").innerText = params.get("cuota");
+
+document.getElementById("valor").innerText = "$"+dinero(params.get("valor"));
+document.getElementById("atrasos").innerText = params.get("atrasos");
+document.getElementById("mora").innerText = "$"+dinero(params.get("mora"));
+
+document.getElementById("saldo").innerText = "$"+dinero(params.get("saldo"));
+document.getElementById("ingreso").innerText = "$"+dinero(params.get("pago"));
+
+let saldo = Number(params.get("saldo")) || 0;
+let pago = Number(params.get("pago")) || 0;
+
+let nuevoSaldo = saldo - pago;
+
+document.getElementById("nuevo_saldo").innerText = "$"+dinero(nuevoSaldo);
+
+// Impresión desactivada para visualización en página.
+</script>
+
+</body>
+</html>
